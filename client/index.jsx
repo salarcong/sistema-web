@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Login from './login.jsx'; // Asegúrate de que la ruta sea correcta
+import './index.css'; // Importa el archivo CSS de Tailwind
+import Login from './components/login.jsx'; // Asegúrate de que la ruta sea correcta
 
 const App = () => {
   return (
-    <div>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <Login />
     </div>
   );
