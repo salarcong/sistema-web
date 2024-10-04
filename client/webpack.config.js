@@ -18,6 +18,10 @@ module.exports = {
         use: {
           loader: 'babel-loader'
         }
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader']
       }
     ]
   },
@@ -25,11 +29,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html'
     })
-    ],
-    devServer: {
-      static: './dist',
-      hot: true,
-      open: true,
-      port: 9000, // example port, customize as needed
-    }
-  };
+  ],
+  devServer: {
+    static: './dist',
+    hot: true,
+    open: true,
+    port: 9000, // example port, customize as needed
+  }
+};
