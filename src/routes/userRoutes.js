@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/userModel');
+const Contact = require('../models/contactModel');
 const bcrypt = require('bcrypt');
 const { generateToken } = require('../middleware/auth');
+const upload = require('../middleware/upload');
+const xlsx = require('xlsx');
 
 // Ruta para registrar un nuevo usuario
 router.post('/register', async (req, res) => {
@@ -32,6 +35,32 @@ router.post('/login', async (req, res) => {
     res.status(200).json({ token, role: user.role });
   } catch (err) {
     res.status(500).send('Error al iniciar sesión: ' + err.message);
+  }
+});
+
+// Ruta para subir archivos Excel y guardar su contenido en la base de datos
+router.post('/upload', upload.single('file'), async (req, res) => {
+  try {
+    const file = req.file;
+    if (!file) {
+      return res.status(400).send('No se ha subido ningún archivo');
+    }
+
+    const workbook = xlsx.readFile(file.path);
+    const sheetName = workbook.SheetNames[0];
+    const sheet = workbook.Sheets[sheetName];
+    const data = xlsx.utils.sheet_to_json(sheet);
+
+    // Procesar los datos y guardarlos en la base de datos
+    for (const row of data) {
+      const { firstName, lastName, phone, email, age } = row;
+      const newContact = new Contact({ firstName, lastName, phone, email, age });
+      await newContact.save();
+    }
+
+    res.status(200).send('Archivo subido y datos guardados exitosamente');
+  } catch (err) {
+    res.status(500).send('Error al procesar el archivo: ' + err.message);
   }
 });
 
