@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/userModel');
-const Contact = require('../models/contactModel');
+const Client = require('../models/clientModel');
 const bcrypt = require('bcrypt');
 const { generateToken } = require('../middleware/auth');
 const upload = require('../middleware/upload');
@@ -53,14 +53,27 @@ router.post('/upload', upload.single('file'), async (req, res) => {
 
     // Procesar los datos y guardarlos en la base de datos
     for (const row of data) {
-      const { firstName, lastName, phone, email, age } = row;
-      const newContact = new Contact({ firstName, lastName, phone, email, age });
-      await newContact.save();
+      const { firstName, lastName, phone, email, age, company } = row;
+      const newClient = new Client({ firstName, lastName, phone, email, age, company });
+      await newClient.save();
     }
 
     res.status(200).send('Archivo subido y datos guardados exitosamente');
   } catch (err) {
     res.status(500).send('Error al procesar el archivo: ' + err.message);
+  }
+});
+
+// Ruta para insertar datos de cliente manualmente
+router.post('/add-client', async (req, res) => {
+  const { firstName, lastName, phone, email, age, company } = req.body;
+
+  try {
+    const newClient = new Client({ firstName, lastName, phone, email, age, company });
+    await newClient.save();
+    res.status(201).send('Cliente agregado exitosamente');
+  } catch (err) {
+    res.status(400).send('Error al agregar cliente: ' + err.message);
   }
 });
 
