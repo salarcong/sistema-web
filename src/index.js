@@ -1,21 +1,22 @@
-const connectToDatabase = require('./database');
+const mongoose = require('./database');
 const express = require('express');
-const path = require('path');
+const routes = require('./routes/routes');
 
 const app = express();
 const port = 3000;
 
-// Servir archivos estáticos desde la carpeta 'client/dist'
-app.use(express.static(path.join(__dirname, '../client/dist')));
+// Middleware para parsear JSON
+app.use(express.json());
 
-app.get('/api', (req, res) => {
-  res.send('Hello World');
+// Usar las rutas desde routes.js
+app.use('/', routes);
+
+// Ruta de ejemplo
+app.get('/', (req, res) => {
+  res.send('Hola Mundo!');
 });
 
-connectToDatabase().then(() => {
-  app.listen(port, () => {
-    console.log(`Servidor escuchando en http://localhost:${port}`);
-  });
-}).catch(err => {
-  console.error('Error al iniciar la aplicación', err);
+// Iniciar el servidor y verificar la conexión a la base de datos
+app.listen(port, () => {
+  console.log(`Servidor escuchando en http://localhost:${port}`);
 });

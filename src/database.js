@@ -1,17 +1,17 @@
+//Importar el paquete mongoose
 const mongoose = require('mongoose');
 
-// URL de conexión (reemplaza <username>, <password> y <dbname> con tus datos)
+//Configurar la URL de conexión a MongoDB
 const url = 'mongodb+srv://salarcong:Perrovolador123@cluster0.xikvt4l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
-async function connectToDatabase() {
-  try {
-    // Conectar a la base de datos
-    await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+//Conectar a la base de datos usando mongoose
+mongoose.connect(url)
+  .then(() => {
     console.log('Conectado a la base de datos');
-  } catch (err) {
+  })
+  .catch(err => {
     console.error('Error al conectar a la base de datos', err);
-  }
-}
+  });
 
-// Exportar la función
-module.exports = connectToDatabase;
+//Exportar la conexión para usarla en otros archivos
+module.exports = mongoose;
