@@ -16,16 +16,6 @@ app.get('/', (req, res) => {
   res.send('Hola Mundo!');
 });
 
-// Ruta para la página de admin
-app.get('/admin', (req, res) => {
-  res.send('Bienvenido, Admin!');
-});
-
-// Ruta para la página de usuario
-app.get('/user', (req, res) => {
-  res.send('Bienvenido, Usuario!');
-});
-
 // Iniciar el servidor y verificar la conexión a la base de datos
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);

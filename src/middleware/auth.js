@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secret = 'your_jwt_secret'; // Cambia esto por una clave secreta más segura
+const secret = 'your_jwt_secret';
 
 // Middleware para verificar el token JWT
 function authenticateToken(req, res, next) {
@@ -19,3 +19,6 @@ function generateToken(user) {
 }
 
 module.exports = { authenticateToken, generateToken };
+
+
+
