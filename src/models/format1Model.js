@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-// Definir el esquema de empleado
-const employeeSchema = new mongoose.Schema({
+// Definir el esquema de cliente con el parámetro extra 'format'
+const format1Schema = new mongoose.Schema({
   firstName: { 
     type: String, 
     required: true 
@@ -26,10 +26,14 @@ const employeeSchema = new mongoose.Schema({
   company: { 
     type: String, 
     required: true 
-  } 
+  },
+  format: { 
+    type: String, 
+    default: 'format1' 
+  }
 });
 
-// Crear el modelo de empleado
-const Employee = mongoose.model('Employee', employeeSchema);
+// Crear el modelo de cliente
+const Format1 = mongoose.model('Format1', format1Schema);
 
-module.exports = Employee;
+module.exports = Format1;
