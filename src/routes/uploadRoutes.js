@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const Format1 = require('../models/format1Model');
 const upload = require('../middleware/upload');
 const xlsx = require('xlsx');
-const Format1 = require('../models/format1Model');
 
 // Ruta para subir archivos Excel y guardar su contenido en la base de datos
 router.post('/upload', upload.single('file'), async (req, res) => {
@@ -19,8 +19,8 @@ router.post('/upload', upload.single('file'), async (req, res) => {
 
     // Procesar los datos y guardarlos en la base de datos
     for (const row of data) {
-      const { firstName, lastName, phone, email, age, company } = row;
-      const newFormat1 = new Format1({ firstName, lastName, phone, email, age, company });
+      const { firstName, lastName, phone, email, age, position, department } = row;
+      const newFormat1 = new Format1({ firstName, lastName, phone, email, age, position, department });
       await newFormat1.save();
     }
 
