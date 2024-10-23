@@ -44,13 +44,23 @@ router.delete('/delete/:id', async (req, res) => {
   }
 });
 
-// Ruta para eliminar todos los documentos con format: 'format1'
-router.delete('/deleteAllFormat1', async (req, res) => {
+// Ruta para modificar un documento por ID
+router.put('/update/:id', async (req, res) => {
+  const { id } = req.params;
+  const { firstName, lastName, phone, email, age, position, department } = req.body;
+
   try {
-    await Format1.deleteMany({ format: 'format1' });
-    res.status(200).send('Todos los clientes con formato "format1" han sido eliminados exitosamente');
+    const updatedFormat1 = await Format1.findByIdAndUpdate(
+      id,
+      { firstName, lastName, phone, email, age, position, department },
+      { new: true, runValidators: true }
+    );
+    if (!updatedFormat1) {
+      return res.status(404).send('Cliente no encontrado');
+    }
+    res.status(200).send('Cliente actualizado exitosamente');
   } catch (err) {
-    res.status(500).send('Error al eliminar los clientes: ' + err.message);
+    res.status(400).send('Error al actualizar cliente: ' + err.message);
   }
 });
 

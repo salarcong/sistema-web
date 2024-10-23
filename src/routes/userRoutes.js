@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
-const { generateToken } = require('../middleware/auth');
+const User = require('../models/userModel');
+const { generateToken } = require('../utils/tokenUtils');
 
 // Ruta para registrar un nuevo usuario
 router.post('/register', async (req, res) => {
@@ -47,6 +47,32 @@ router.delete('/delete/:id', async (req, res) => {
     res.status(200).send('Usuario eliminado exitosamente');
   } catch (err) {
     res.status(500).send('Error al eliminar usuario: ' + err.message);
+  }
+});
+
+// Ruta para modificar un usuario por ID
+router.put('/update/:id', async (req, res) => {
+  const { id } = req.params;
+  const { username, email, password, role } = req.body;
+
+  try {
+    const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { 
+        username, 
+        email, 
+        ...(hashedPassword && { password: hashedPassword }), 
+        role 
+      },
+      { new: true, runValidators: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).send('Usuario no encontrado');
+    }
+    res.status(200).send('Usuario actualizado exitosamente');
+  } catch (err) {
+    res.status(400).send('Error al actualizar usuario: ' + err.message);
   }
 });
 
