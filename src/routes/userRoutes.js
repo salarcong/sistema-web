@@ -23,7 +23,9 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    // Buscar al usuario por correo electrónico
     const user = await User.findOne({ email });
+
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).send('Credenciales incorrectas');
     }
@@ -34,6 +36,14 @@ router.post('/login', async (req, res) => {
     res.status(500).send('Error al iniciar sesión: ' + err.message);
   }
 });
+
+// Ruta para eliminar un usuario
+router.delete('/delete/:id', async (req, res) => {
+  const { id } = req.params;
+  // Código para eliminar un usuario
+});
+
+module.exports = router;
 
 // Ruta para eliminar un usuario
 router.delete('/delete/:id', async (req, res) => {
