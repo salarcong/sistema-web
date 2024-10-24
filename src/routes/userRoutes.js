@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/userModel');
-const { generateToken } = require('../utils/tokenUtils');
+const { generateToken } = require('../middleware/auth');
 
 // Ruta para registrar un nuevo usuario
 router.post('/register', async (req, res) => {
