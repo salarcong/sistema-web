@@ -1,7 +1,10 @@
 import React from 'react';
 import { FaUser, FaCog, FaChartBar } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen flex bg-gradient-to-r from-blue-500 to-purple-600">
       <aside className="w-64 bg-gray-800 text-white flex flex-col">
@@ -11,9 +14,12 @@ const AdminDashboard = () => {
         <nav className="flex-1 p-4">
           <ul>
             <li className="mb-4">
-              <a href="#users" className="flex items-center p-2 hover:bg-gray-700 rounded">
+              <button
+                onClick={() => navigate('/users')}
+                className="flex items-center p-2 hover:bg-gray-700 rounded w-full text-left"
+              >
                 <FaUser className="mr-2" /> Usuarios
-              </a>
+              </button>
             </li>
             <li className="mb-4">
               <a href="#settings" className="flex items-center p-2 hover:bg-gray-700 rounded">

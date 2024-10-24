@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/userModel');
-const { generateToken } = require('../middleware/auth');
+const { generateToken, verifyAdmin } = require('../middleware/auth');
 
 // Ruta para registrar un nuevo usuario
 router.post('/register', async (req, res) => {
@@ -83,6 +83,16 @@ router.put('/update/:id', async (req, res) => {
     res.status(200).send('Usuario actualizado exitosamente');
   } catch (err) {
     res.status(400).send('Error al actualizar usuario: ' + err.message);
+  }
+});
+
+// Nueva ruta para consultar todos los usuarios
+router.get('/usersAll', async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).send('Error al obtener usuarios: ' + err.message);
   }
 });
 
