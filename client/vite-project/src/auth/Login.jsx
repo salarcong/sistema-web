@@ -1,21 +1,30 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch('/api/login', {
+    const response = await fetch('/api/login', { // Ruta correcta para el inicio de sesión
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
     });
+    const data = await response.json();
     if (response.ok) {
       alert('Login exitoso');
+      // Redirigir según el rol del usuario
+      if (data.role === 'admin') {
+        navigate('/admin-dashboard');
+      } else {
+        navigate('/user-dashboard');
+      }
     } else {
       alert('Error en el login');
     }
