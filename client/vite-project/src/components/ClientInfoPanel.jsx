@@ -1,5 +1,5 @@
-// client/vite-project/src/components/ClientInfoPanel.jsx
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getClientRequest } from '../api/axios';
 import { FaEnvelope, FaPhone, FaBirthdayCake } from 'react-icons/fa';
 
@@ -7,6 +7,7 @@ const ClientInfoPanel = ({ clientId }) => {
   const [client, setClient] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchClient = async () => {
@@ -53,6 +54,14 @@ const ClientInfoPanel = ({ clientId }) => {
             <p className="text-gray-600 flex items-center"><FaEnvelope className="mr-2" /> <strong>Email:</strong> {client.email}</p>
             <p className="text-gray-600 flex items-center"><FaPhone className="mr-2" /> <strong>Phone:</strong> {client.phone}</p>
             <p className="text-gray-600 flex items-center"><FaBirthdayCake className="mr-2" /> <strong>Age:</strong> {client.age}</p>
+          </div>
+          <div className="flex justify-end mt-4">
+            <button
+              onClick={() => navigate(-1)}
+              className="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition duration-300 shadow-md transform hover:scale-105"
+            >
+              Back
+            </button>
           </div>
         </div>
       ) : (
