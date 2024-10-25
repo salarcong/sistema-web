@@ -33,18 +33,20 @@ const UserPanel = ({ user, onDelete }) => {
       <h2 className="text-xl font-bold mb-2">{user.username}</h2>
       <p className="text-gray-700">{user.email}</p>
       <p className="text-gray-700">Role: {user.role}</p>
-      <button
-        onClick={() => setIsEditing(true)}
-        className="mt-4 bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600"
-      >
-        Edit User
-      </button>
-      <button
-        onClick={handleDeleteUser}
-        className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 ml-2"
-      >
-        Delete User
-      </button>
+      <div className="flex space-x-2 mt-4">
+        <button
+          onClick={() => setIsEditing(true)}
+          className="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600 transition duration-300 shadow-lg transform hover:scale-105"
+        >
+          Edit User
+        </button>
+        <button
+          onClick={handleDeleteUser}
+          className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition duration-300 shadow-lg transform hover:scale-105"
+        >
+          Delete User
+        </button>
+      </div>
       <EditUserModal
         isOpen={isEditing}
         onRequestClose={() => setIsEditing(false)}

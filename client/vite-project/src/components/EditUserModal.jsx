@@ -33,41 +33,43 @@ const EditUserModal = ({ isOpen, onRequestClose, user, onSave }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel="Edit User">
-      <h2>Edit User</h2>
+    <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel="Edit User" className="modal" overlayClassName="modal-overlay">
+      <h2 className="text-2xl font-bold mb-4">Edit User</h2>
       <input
         type="text"
         name="username"
         value={editedUser.username}
         onChange={handleChange}
-        className="mb-2 p-2 border rounded"
+        className="mb-2 p-2 border rounded w-full"
       />
       <input
         type="email"
         name="email"
         value={editedUser.email}
         onChange={handleChange}
-        className="mb-2 p-2 border rounded"
+        className="mb-2 p-2 border rounded w-full"
       />
       <input
         type="text"
         name="role"
         value={editedUser.role}
         onChange={handleChange}
-        className="mb-2 p-2 border rounded"
+        className="mb-2 p-2 border rounded w-full"
       />
-      <button
-        onClick={handleSave}
-        className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-      >
-        Save
-      </button>
-      <button
-        onClick={onRequestClose}
-        className="mt-4 bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600 ml-2"
-      >
-        Cancel
-      </button>
+      <div className="flex space-x-2 mt-4">
+        <button
+          onClick={handleSave}
+          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300 shadow-lg transform hover:scale-105"
+        >
+          Save
+        </button>
+        <button
+          onClick={onRequestClose}
+          className="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600 transition duration-300 shadow-lg transform hover:scale-105"
+        >
+          Cancel
+        </button>
+      </div>
     </Modal>
   );
 };
