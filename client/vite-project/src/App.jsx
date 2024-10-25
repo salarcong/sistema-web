@@ -6,6 +6,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import UserDashboard from './pages/UserDashboard';
 import Users from './pages/Users'; // Añadir importación de Users
 import ClientsPage from './pages/ClientsPage';
+import CreateClientPage from './pages/CreateClientPage';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/user-dashboard" element={<UserDashboard />} />
         <Route path="/users" element={<Users />} /> {/* Añadir ruta para Users */}
         <Route path="/clients" element={<ClientsPage />} />
+        <Route path="/create-client" element={<CreateClientPage />} />
       </Routes>
     </Router>
   );

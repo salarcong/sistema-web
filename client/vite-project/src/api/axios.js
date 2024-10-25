@@ -19,3 +19,4 @@ export const getClientsRequest = () => api.get('/clients');
 export const getClientRequest = (id) => api.get(`/client/${id}`);
 export const deleteClientRequest = (id) => api.delete(`/delete-client/${id}`);
 export const updateClientRequest = (id, client) => api.put(`/update-client/${id}`, client);
+export const createClientRequest = (client) => api.post('/add-client', client);

@@ -30,12 +30,18 @@ const ClientsPage = () => {
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-r from-blue-500 to-purple-600 p-8">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Clientes</h1>
-        <div className="mb-6 text-center">
+        <div className="mb-6 text-center flex justify-center space-x-4">
           <button
             onClick={() => navigate('/admin-dashboard')}
             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300 shadow-lg transform hover:scale-105"
           >
             Back to Admin Dashboard
+          </button>
+          <button
+            onClick={() => navigate('/create-client')}
+            className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-300 shadow-lg transform hover:scale-105"
+          >
+            Add Client
           </button>
         </div>
         {error ? (
