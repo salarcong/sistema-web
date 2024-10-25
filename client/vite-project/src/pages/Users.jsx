@@ -16,6 +16,10 @@ const Users = () => {
     }
   };
 
+  const handleDeleteUser = (userId) => {
+    setUsers(users.filter(user => user._id !== userId));
+  };
+
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -29,7 +33,7 @@ const Users = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {users.map((user) => (
-              <UserPanel key={user._id} username={user.username} email={user.email} />
+              <UserPanel key={user._id} user={user} onDelete={handleDeleteUser} />
             ))}
           </div>
         )}

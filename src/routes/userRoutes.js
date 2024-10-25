@@ -38,15 +38,7 @@ router.post('/login', async (req, res) => {
 });
 
 // Ruta para eliminar un usuario
-router.delete('/delete/:id', async (req, res) => {
-  const { id } = req.params;
-  // Código para eliminar un usuario
-});
-
-module.exports = router;
-
-// Ruta para eliminar un usuario
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/deleteUser/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -61,7 +53,7 @@ router.delete('/delete/:id', async (req, res) => {
 });
 
 // Ruta para modificar un usuario por ID
-router.put('/update/:id', async (req, res) => {
+router.put('/updateUser/:id', async (req, res) => {
   const { id } = req.params;
   const { username, email, password, role } = req.body;
 
@@ -93,6 +85,21 @@ router.get('/usersAll', async (req, res) => {
     res.status(200).json(users);
   } catch (err) {
     res.status(500).send('Error al obtener usuarios: ' + err.message);
+  }
+});
+
+// Nueva ruta para consultar un usuario por ID
+router.get('/user/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).send('Usuario no encontrado');
+    }
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).send('Error al obtener usuario: ' + err.message);
   }
 });
 
