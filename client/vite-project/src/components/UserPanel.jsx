@@ -1,7 +1,7 @@
 // client/vite-project/src/components/UserPanel.jsx
 import React, { useState } from 'react';
 import { deleteUserRequest } from '../api/axios';
-import EditUserForm from './EditUserForm';
+import EditUserModal from './EditUserModal';
 
 const UserPanel = ({ user, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -25,35 +25,32 @@ const UserPanel = ({ user, onDelete }) => {
   const handleSaveUser = (updatedUser) => {
     setIsEditing(false);
     // Aquí puedes actualizar el estado del usuario si es necesario
+    window.location.reload(); // Recargar la página automáticamente
   };
 
   return (
     <div className="bg-gray-100 p-4 rounded-lg shadow">
-      {isEditing ? (
-        <EditUserForm
-          user={user}
-          onCancel={() => setIsEditing(false)}
-          onSave={handleSaveUser}
-        />
-      ) : (
-        <div>
-          <h2 className="text-xl font-bold mb-2">{user.username}</h2>
-          <p className="text-gray-700">{user.email}</p>
-          <p className="text-gray-700">Role: {user.role}</p>
-          <button
-            onClick={() => setIsEditing(true)}
-            className="mt-4 bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600"
-          >
-            Edit User
-          </button>
-          <button
-            onClick={handleDeleteUser}
-            className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 ml-2"
-          >
-            Delete User
-          </button>
-        </div>
-      )}
+      <h2 className="text-xl font-bold mb-2">{user.username}</h2>
+      <p className="text-gray-700">{user.email}</p>
+      <p className="text-gray-700">Role: {user.role}</p>
+      <button
+        onClick={() => setIsEditing(true)}
+        className="mt-4 bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600"
+      >
+        Edit User
+      </button>
+      <button
+        onClick={handleDeleteUser}
+        className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 ml-2"
+      >
+        Delete User
+      </button>
+      <EditUserModal
+        isOpen={isEditing}
+        onRequestClose={() => setIsEditing(false)}
+        user={user}
+        onSave={handleSaveUser}
+      />
     </div>
   );
 };
