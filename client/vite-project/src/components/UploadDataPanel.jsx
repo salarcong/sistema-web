@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { getDataRequest, deleteDataRequest } from '../api/axios'; // Importa la función deleteDataRequest
+import { getDataRequest, deleteDataRequest } from '../api/axios';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import EditDataModal from './EditDataModal';
 
 const UploadDataPanel = ({ handleFileChange, handleUpload }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentData, setCurrentData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +41,21 @@ const UploadDataPanel = ({ handleFileChange, handleUpload }) => {
     }
   };
 
+  const handleEdit = (item) => {
+    setCurrentData(item);
+    setIsEditing(true);
+  };
+
+  const handleSave = (updatedData) => {
+    setData(data.map(item => (item._id === updatedData._id ? updatedData : item)));
+    setIsEditing(false);
+  };
+
+  const handleUploadAndRefresh = async () => {
+    await handleUpload();
+    window.location.reload();
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-full">
@@ -60,7 +78,7 @@ const UploadDataPanel = ({ handleFileChange, handleUpload }) => {
           className="mb-4 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <button
-          onClick={handleUpload}
+          onClick={handleUploadAndRefresh}
           className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300 shadow-lg transform hover:scale-105"
         >
           Upload File
@@ -91,7 +109,10 @@ const UploadDataPanel = ({ handleFileChange, handleUpload }) => {
                   <td className="py-2 px-4 border-b border-gray-200">{item.age}</td>
                   <td className="py-2 px-4 border-b border-gray-200">{item.position}</td>
                   <td className="py-2 px-4 border-b border-gray-200 flex space-x-2">
-                    <button className="bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600 transition duration-300 shadow-md transform hover:scale-105">
+                    <button
+                      onClick={() => handleEdit(item)}
+                      className="bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600 transition duration-300 shadow-md transform hover:scale-105"
+                    >
                       <FaEdit />
                     </button>
                     <button
@@ -109,6 +130,12 @@ const UploadDataPanel = ({ handleFileChange, handleUpload }) => {
       ) : (
         <p className="text-center text-gray-600">No data uploaded yet.</p>
       )}
+      <EditDataModal
+        isOpen={isEditing}
+        onRequestClose={() => setIsEditing(false)}
+        data={currentData}
+        onSave={handleSave}
+      />
     </div>
   );
 };
