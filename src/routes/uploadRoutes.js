@@ -56,7 +56,7 @@ router.get('/dataXLSX/:id', async (req, res) => {
 });
 
 // Ruta para eliminar un documento por ID
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/deleteXLSX/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const result = await Format1.findByIdAndDelete(id);
@@ -70,7 +70,7 @@ router.delete('/delete/:id', async (req, res) => {
 });
 
 // Ruta para modificar un documento por ID
-router.put('/update/:id', async (req, res) => {
+router.put('/updateXLSX/:id', async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, phone, email, age, position, department } = req.body;
 
