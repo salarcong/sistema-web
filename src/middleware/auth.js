@@ -13,12 +13,22 @@ function authenticateToken(req, res, next) {
   });
 }
 
+// Middleware para verificar el rol de administrador
+function verifyAdmin(req, res, next) {
+  authenticateToken(req, res, () => {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Forbidden: You do not have permission to access this resource' });
+    }
+    next();
+  });
+}
+
 // Función para generar un token JWT
 function generateToken(user) {
   return jwt.sign({ id: user._id, role: user.role }, secret, { expiresIn: '1h' });
 }
 
-module.exports = { authenticateToken, generateToken };
+module.exports = { authenticateToken, verifyAdmin, generateToken };
 
 
 

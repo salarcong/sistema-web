@@ -9,23 +9,27 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch('/api/login', { // Ruta correcta para el inicio de sesión
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await response.json();
-    if (response.ok) {
-      alert('Login exitoso');
-      // Redirigir según el rol del usuario
-      if (data.role === 'admin') {
-        navigate('/admin-dashboard');
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        localStorage.setItem('token', data.token); // Guardar el token en localStorage
+        alert('Login exitoso');
+        if (data.role === 'admin') {
+          navigate('/admin-dashboard');
+        } else {
+          navigate('/user-dashboard');
+        }
       } else {
-        navigate('/user-dashboard');
+        alert('Error en el login');
       }
-    } else {
+    } catch (error) {
       alert('Error en el login');
     }
   };

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/userModel');
-const { generateToken } = require('../middleware/auth');
+const { generateToken, verifyAdmin } = require('../middleware/auth');
 
 // Ruta para registrar un nuevo usuario
 router.post('/register', async (req, res) => {
@@ -38,15 +38,7 @@ router.post('/login', async (req, res) => {
 });
 
 // Ruta para eliminar un usuario
-router.delete('/delete/:id', async (req, res) => {
-  const { id } = req.params;
-  // Código para eliminar un usuario
-});
-
-module.exports = router;
-
-// Ruta para eliminar un usuario
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/deleteUser/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -61,7 +53,7 @@ router.delete('/delete/:id', async (req, res) => {
 });
 
 // Ruta para modificar un usuario por ID
-router.put('/update/:id', async (req, res) => {
+router.put('/updateUser/:id', async (req, res) => {
   const { id } = req.params;
   const { username, email, password, role } = req.body;
 
@@ -83,6 +75,31 @@ router.put('/update/:id', async (req, res) => {
     res.status(200).send('Usuario actualizado exitosamente');
   } catch (err) {
     res.status(400).send('Error al actualizar usuario: ' + err.message);
+  }
+});
+
+// Nueva ruta para consultar todos los usuarios
+router.get('/usersAll', async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).send('Error al obtener usuarios: ' + err.message);
+  }
+});
+
+// Nueva ruta para consultar un usuario por ID
+router.get('/user/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).send('Usuario no encontrado');
+    }
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).send('Error al obtener usuario: ' + err.message);
   }
 });
 

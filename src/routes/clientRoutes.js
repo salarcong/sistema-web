@@ -49,4 +49,29 @@ router.put('/update-client/:id', async (req, res) => {
   }
 });
 
+// Ruta para obtener todos los clientes
+router.get('/clientsAll', async (req, res) => {
+  try {
+    const clients = await Client.find({});
+    res.status(200).json(clients);
+  } catch (err) {
+    res.status(500).send('Error al obtener clientes: ' + err.message);
+  }
+});
+
+// Ruta para obtener un cliente por ID
+router.get('/client/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const client = await Client.findById(id);
+    if (!client) {
+      return res.status(404).send('Cliente no encontrado');
+    }
+    res.status(200).json(client);
+  } catch (err) {
+    res.status(500).send('Error al obtener cliente: ' + err.message);
+  }
+});
+
 module.exports = router;
