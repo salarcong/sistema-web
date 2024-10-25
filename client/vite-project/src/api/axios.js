@@ -9,6 +9,13 @@ const api = axios.create({
   },
 });
 
+// Funciones para usuarios
 export const getUserRequest = (id) => api.get(`/user/${id}`);
 export const deleteUserRequest = (id) => api.delete(`/deleteUser/${id}`);
 export const updateUserRequest = (id, user) => api.put(`/updateUser/${id}`, user);
+
+// Funciones para clientes
+export const getClientsRequest = () => api.get('/clients');
+export const getClientRequest = (id) => api.get(`/client/${id}`);
+export const deleteClientRequest = (id) => api.delete(`/delete-client/${id}`);
+export const updateClientRequest = (id, client) => api.put(`/update-client/${id}`, client);

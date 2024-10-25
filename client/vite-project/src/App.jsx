@@ -5,6 +5,7 @@ import Register from './auth/Register';
 import AdminDashboard from './pages/AdminDashboard';
 import UserDashboard from './pages/UserDashboard';
 import Users from './pages/Users'; // Añadir importación de Users
+import ClientsPage from './pages/ClientsPage';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/user-dashboard" element={<UserDashboard />} />
         <Route path="/users" element={<Users />} /> {/* Añadir ruta para Users */}
+        <Route path="/clients" element={<ClientsPage />} />
       </Routes>
     </Router>
   );

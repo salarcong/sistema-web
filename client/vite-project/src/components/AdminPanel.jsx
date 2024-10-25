@@ -1,6 +1,6 @@
 // client/vite-project/src/components/AdminPanel.jsx
 import React from 'react';
-import { FaUser, FaCog, FaChartBar, FaSignOutAlt, FaBars, FaTimes } from 'react-icons/fa';
+import { FaUser, FaCog, FaChartBar, FaSignOutAlt, FaBars, FaTimes, FaUsers } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 const AdminPanel = ({ isPanelOpen, togglePanel, handleLogout }) => {
@@ -25,9 +25,12 @@ const AdminPanel = ({ isPanelOpen, togglePanel, handleLogout }) => {
             </button>
           </li>
           <li className="mb-4">
-            <a href="#settings" className="flex items-center p-2 hover:bg-gray-700 rounded">
-              <FaCog className="mr-2" /> {isPanelOpen && 'Configuración'}
-            </a>
+            <button
+              onClick={() => navigate('/clients')}
+              className="flex items-center p-2 hover:bg-gray-700 rounded w-full text-left"
+            >
+              <FaUsers className="mr-2" /> {isPanelOpen && 'Clientes'}
+            </button>
           </li>
           <li className="mb-4">
             <a href="#reports" className="flex items-center p-2 hover:bg-gray-700 rounded">
