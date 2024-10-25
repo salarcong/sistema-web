@@ -1,3 +1,4 @@
+// client/vite-project/src/api/axios.js
 import axios from 'axios';
 
 const api = axios.create({
@@ -8,5 +9,6 @@ const api = axios.create({
   },
 });
 
-export const getUsersRequest = () => api.get('/usersAll');
+export const getUserRequest = (id) => api.get(`/user/${id}`);
 export const deleteUserRequest = (id) => api.delete(`/deleteUser/${id}`);
+export const updateUserRequest = (id, user) => api.put(`/updateUser/${id}`, user);
