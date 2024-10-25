@@ -4,45 +4,51 @@ const router = express.Router();
 const Format1 = require('../models/format1Model');
 const upload = require('../middleware/upload');
 const xlsx = require('xlsx');
+const fs = require('fs');
 
-// Ruta para subir archivos Excel y guardar su contenido en la base de datos
-router.post('/upload', upload.single('file'), async (req, res) => {
+// Ruta para subir múltiples archivos Excel y guardar su contenido en la base de datos
+router.post('/upload', upload.array('files', 10), async (req, res) => {
   try {
-    const file = req.file;
+    const files = req.files;
     const { clientId } = req.body;
 
-    if (!file) {
-      return res.status(400).send('No se ha subido ningún archivo');
+    if (!files || files.length === 0) {
+      return res.status(400).send('No se han subido archivos');
     }
 
     if (!clientId) {
       return res.status(400).send('No se ha proporcionado el clientId');
     }
 
-    const workbook = xlsx.readFile(file.path);
-    const sheetName = workbook.SheetNames[0];
-    const sheet = workbook.Sheets[sheetName];
-    const data = xlsx.utils.sheet_to_json(sheet);
+    for (const file of files) {
+      const workbook = xlsx.readFile(file.path);
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      const data = xlsx.utils.sheet_to_json(sheet);
 
-    // Procesar los datos y guardarlos en la base de datos
-    for (const row of data) {
-      const { firstName, lastName, phone, email, age, position, department } = row;
-      const newFormat1 = new Format1({ 
-        firstName, 
-        lastName, 
-        phone, 
-        email, 
-        age, 
-        position, 
-        department,
-        clientId // Asegúrate de que el clientId se guarde en el documento
-      });
-      await newFormat1.save();
+      // Procesar los datos y guardarlos en la base de datos
+      for (const row of data) {
+        const { firstName, lastName, phone, email, age, position, department } = row;
+        const newFormat1 = new Format1({ 
+          firstName, 
+          lastName, 
+          phone, 
+          email, 
+          age, 
+          position, 
+          department,
+          clientId // Asegúrate de que el clientId se guarde en el documento
+        });
+        await newFormat1.save();
+      }
+
+      // Eliminar el archivo después de procesarlo
+      fs.unlinkSync(file.path);
     }
 
-    res.status(200).send('Archivo subido y datos guardados exitosamente');
+    res.status(200).send('Archivos subidos y datos guardados exitosamente');
   } catch (err) {
-    res.status(500).send('Error al procesar el archivo: ' + err.message);
+    res.status(500).send('Error al procesar los archivos: ' + err.message);
   }
 });
 
