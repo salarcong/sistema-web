@@ -27,7 +27,7 @@ export const uploadFileRequest = (formData) => api.post('/upload', formData, {
     'Content-Type': 'multipart/form-data',
   },
 });
-export const getDataRequest = () => api.get('/dataXLSX');
+export const getDataRequest = (clientId) => api.get(`/dataXLSX/${clientId}`);
 export const getDataByIdRequest = (id) => api.get(`/dataXLSX/${id}`);
 export const deleteDataRequest = (id) => api.delete(`/deleteXLSX/${id}`);
 export const updateDataRequest = (id, data) => api.put(`/updateXLSX/${id}`, data);

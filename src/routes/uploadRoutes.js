@@ -1,3 +1,4 @@
+// src/routes/uploadRoutes.js
 const express = require('express');
 const router = express.Router();
 const Format1 = require('../models/format1Model');
@@ -8,8 +9,14 @@ const xlsx = require('xlsx');
 router.post('/upload', upload.single('file'), async (req, res) => {
   try {
     const file = req.file;
+    const { clientId } = req.body;
+
     if (!file) {
       return res.status(400).send('No se ha subido ningún archivo');
+    }
+
+    if (!clientId) {
+      return res.status(400).send('No se ha proporcionado el clientId');
     }
 
     const workbook = xlsx.readFile(file.path);
@@ -20,7 +27,16 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     // Procesar los datos y guardarlos en la base de datos
     for (const row of data) {
       const { firstName, lastName, phone, email, age, position, department } = row;
-      const newFormat1 = new Format1({ firstName, lastName, phone, email, age, position, department });
+      const newFormat1 = new Format1({ 
+        firstName, 
+        lastName, 
+        phone, 
+        email, 
+        age, 
+        position, 
+        department,
+        clientId // Asegúrate de que el clientId se guarde en el documento
+      });
       await newFormat1.save();
     }
 
@@ -30,10 +46,11 @@ router.post('/upload', upload.single('file'), async (req, res) => {
   }
 });
 
-// Ruta para obtener todos los datos subidos
-router.get('/dataXLSX', async (req, res) => {
+// Ruta para obtener todos los datos subidos por un cliente específico
+router.get('/dataXLSX/:clientId', async (req, res) => {
+  const { clientId } = req.params;
   try {
-    const data = await Format1.find({});
+    const data = await Format1.find({ clientId });
     res.status(200).json(data);
   } catch (err) {
     res.status(500).send('Error al obtener los datos: ' + err.message);
@@ -61,11 +78,11 @@ router.delete('/deleteXLSX/:id', async (req, res) => {
     const { id } = req.params;
     const result = await Format1.findByIdAndDelete(id);
     if (!result) {
-      return res.status(404).send('Cliente no encontrado');
+      return res.status(404).send('Documento no encontrado');
     }
-    res.status(200).send('Cliente eliminado exitosamente');
+    res.status(200).send('Documento eliminado exitosamente');
   } catch (err) {
-    res.status(500).send('Error al eliminar el cliente: ' + err.message);
+    res.status(500).send('Error al eliminar el documento: ' + err.message);
   }
 });
 

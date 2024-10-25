@@ -24,6 +24,7 @@ const UploadDataPage = () => {
 
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('clientId', clientId); // Añade el clientId al formData
 
     try {
       const response = await uploadFileRequest(formData);
@@ -45,7 +46,7 @@ const UploadDataPage = () => {
       <UploadDataPanel
         handleFileChange={handleFileChange}
         handleUpload={handleUpload}
-        navigate={navigate}
+        clientId={clientId} // Pasa el clientId al componente UploadDataPanel
       />
     </div>
   );
