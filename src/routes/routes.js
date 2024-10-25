@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userRoutes = require('./userRoutes');
 const clientRoutes = require('./clientRoutes');
+const uploadRoutes = require('./uploadRoutes');
 const { authenticateToken } = require('../middleware/auth');
 
 // Usar las rutas de usuario
@@ -9,6 +10,8 @@ router.use('/', userRoutes);
 
 // Usar las rutas de cliente
 router.use('/', clientRoutes);
+
+router.use('/', uploadRoutes);
 
 // Ruta de ejemplo
 router.get('/', (req, res) => {

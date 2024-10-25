@@ -20,3 +20,12 @@ export const getClientRequest = (id) => api.get(`/client/${id}`);
 export const deleteClientRequest = (id) => api.delete(`/delete-client/${id}`);
 export const updateClientRequest = (id, client) => api.put(`/update-client/${id}`, client);
 export const createClientRequest = (client) => api.post('/add-client', client);
+
+// Funciones para subir archivos y obtener datos
+export const uploadFileRequest = (formData) => api.post('/upload', formData, {
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
+});
+export const getDataRequest = () => api.get('/dataXLSX');
+export const getDataByIdRequest = (id) => api.get(`/dataXLSX/${id}`);

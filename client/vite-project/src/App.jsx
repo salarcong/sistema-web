@@ -7,6 +7,7 @@ import UserDashboard from './pages/UserDashboard';
 import Users from './pages/Users'; // Añadir importación de Users
 import ClientsPage from './pages/ClientsPage';
 import CreateClientPage from './pages/CreateClientPage';
+import UploadDataPage from './pages/UploadDataPage';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/users" element={<Users />} /> {/* Añadir ruta para Users */}
         <Route path="/clients" element={<ClientsPage />} />
         <Route path="/create-client" element={<CreateClientPage />} />
+        <Route path="/upload-data" element={<UploadDataPage />} />
       </Routes>
     </Router>
   );

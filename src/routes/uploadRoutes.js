@@ -30,6 +30,31 @@ router.post('/upload', upload.single('file'), async (req, res) => {
   }
 });
 
+// Ruta para obtener todos los datos subidos
+router.get('/dataXLSX', async (req, res) => {
+  try {
+    const data = await Format1.find({});
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).send('Error al obtener los datos: ' + err.message);
+  }
+});
+
+// Ruta para obtener un dato por ID
+router.get('/dataXLSX/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const data = await Format1.findById(id);
+    if (!data) {
+      return res.status(404).send('Dato no encontrado');
+    }
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).send('Error al obtener el dato: ' + err.message);
+  }
+});
+
 // Ruta para eliminar un documento por ID
 router.delete('/delete/:id', async (req, res) => {
   try {
@@ -56,11 +81,11 @@ router.put('/update/:id', async (req, res) => {
       { new: true, runValidators: true }
     );
     if (!updatedFormat1) {
-      return res.status(404).send('Cliente no encontrado');
+      return res.status(404).send('Dato no encontrado');
     }
-    res.status(200).send('Cliente actualizado exitosamente');
+    res.status(200).send('Dato actualizado exitosamente');
   } catch (err) {
-    res.status(400).send('Error al actualizar cliente: ' + err.message);
+    res.status(400).send('Error al actualizar el dato: ' + err.message);
   }
 });
 

@@ -1,10 +1,11 @@
-// client/vite-project/src/components/ClientPanel.jsx
 import React, { useState } from 'react';
-import { deleteClientRequest, updateClientRequest } from '../api/axios';
+import { useNavigate } from 'react-router-dom';
+import { deleteClientRequest } from '../api/axios';
 import EditClientModal from './EditClientModal';
 
 const ClientPanel = ({ client, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const navigate = useNavigate();
 
   const handleDeleteClient = async () => {
     if (window.confirm('Are you sure you want to delete this client?')) {
@@ -29,23 +30,29 @@ const ClientPanel = ({ client, onDelete }) => {
   };
 
   return (
-    <div className="bg-gray-100 p-4 rounded-lg shadow">
-      <h2 className="text-xl font-bold mb-2">{client.firstName} {client.lastName}</h2>
-      <p className="text-gray-700">{client.email}</p>
-      <p className="text-gray-700">Phone: {client.phone}</p>
-      <p className="text-gray-700">Company: {client.company}</p>
-      <div className="flex space-x-2 mt-4">
+    <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+      <h2 className="text-2xl font-bold mb-4 text-gray-800">{client.firstName} {client.lastName}</h2>
+      <p className="text-gray-600 mb-2"><strong>Email:</strong> {client.email}</p>
+      <p className="text-gray-600 mb-2"><strong>Phone:</strong> {client.phone}</p>
+      <p className="text-gray-600 mb-4"><strong>Company:</strong> {client.company}</p>
+      <div className="flex space-x-4">
         <button
           onClick={() => setIsEditing(true)}
-          className="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600 transition duration-300 shadow-lg transform hover:scale-105"
+          className="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600 transition duration-300 shadow-md transform hover:scale-105"
         >
           Edit Client
         </button>
         <button
           onClick={handleDeleteClient}
-          className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition duration-300 shadow-lg transform hover:scale-105"
+          className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 shadow-md transform hover:scale-105"
         >
           Delete Client
+        </button>
+        <button
+          onClick={() => navigate(`/upload-data?clientId=${client._id}`)}
+          className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 shadow-md transform hover:scale-105"
+        >
+          Data
         </button>
       </div>
       <EditClientModal
