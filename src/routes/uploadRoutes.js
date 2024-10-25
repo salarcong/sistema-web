@@ -48,6 +48,7 @@ router.post('/upload', upload.array('files', 10), async (req, res) => {
 
     res.status(200).send('Archivos subidos y datos guardados exitosamente');
   } catch (err) {
+    console.error(err);
     res.status(500).send('Error al procesar los archivos: ' + err.message);
   }
 });

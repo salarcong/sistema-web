@@ -37,7 +37,7 @@ const UploadDataPanel = ({ handleFileChange, handleUpload, clientId }) => {
         }
       } catch (error) {
         console.error('Error deleting document:', error);
-        alert('An error occurred while deleting the document');
+        alert('error');
       }
     }
   };
@@ -86,6 +86,7 @@ const UploadDataPanel = ({ handleFileChange, handleUpload, clientId }) => {
         </button>
       </div>
       <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">Uploaded Data</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">{clientId}</h2>
       {data.length > 0 ? (
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">

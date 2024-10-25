@@ -26,6 +26,7 @@ const UploadDataPage = () => {
     for (const file of files) {
       formData.append('files', file);
     }
+    console.log('clientId:', clientId);
     formData.append('clientId', clientId); // Añade el clientId al formData
 
     try {
