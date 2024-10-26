@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { uploadFileRequest } from '../api/axios'; // Importa la función
 import ClientInfoPanel from '../components/ClientInfoPanel';
 import UploadDataPanel from '../components/UploadDataPanel';
+import AdminPanel from '../components/AdminPanel'; // Importa el componente AdminPanel
 
 const UploadDataPage = () => {
   const [files, setFiles] = useState([]);
@@ -51,6 +52,7 @@ const UploadDataPage = () => {
         handleUpload={handleUpload}
         clientId={clientId} // Pasa el clientId al componente UploadDataPanel
       />
+      <AdminPanel clientId={clientId} /> {/* Añade el componente AdminPanel */}
     </div>
   );
 };
