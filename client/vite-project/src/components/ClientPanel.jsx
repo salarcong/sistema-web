@@ -35,22 +35,22 @@ const ClientPanel = ({ client, onDelete }) => {
       <p className="text-gray-600 mb-2"><strong>Email:</strong> {client.email}</p>
       <p className="text-gray-600 mb-2"><strong>Phone:</strong> {client.phone}</p>
       <p className="text-gray-600 mb-4"><strong>Company:</strong> {client.company}</p>
-      <div className="flex space-x-4">
+      <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
         <button
           onClick={() => setIsEditing(true)}
-          className="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600 transition duration-300 shadow-md transform hover:scale-105"
+          className="bg-yellow-500 text-white text-sm py-2 px-4 w-full sm:w-auto rounded-md hover:bg-yellow-600 transition duration-300 shadow-md transform hover:scale-105"
         >
           Edit Client
         </button>
         <button
           onClick={handleDeleteClient}
-          className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 shadow-md transform hover:scale-105"
+          className="bg-red-500 text-white text-sm py-2 px-4 w-full sm:w-auto rounded-md hover:bg-red-600 transition duration-300 shadow-md transform hover:scale-105"
         >
           Delete Client
         </button>
         <button
           onClick={() => navigate(`/upload-data?clientId=${client._id}`)}
-          className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 shadow-md transform hover:scale-105"
+          className="bg-blue-500 text-white text-sm py-2 px-4 w-full sm:w-auto rounded-md hover:bg-blue-600 transition duration-300 shadow-md transform hover:scale-105"
         >
           Data
         </button>
