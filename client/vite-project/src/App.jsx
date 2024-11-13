@@ -8,21 +8,78 @@ import Users from './pages/Users'; // Añadir importación de Users
 import ClientsPage from './pages/ClientsPage';
 import CreateClientPage from './pages/CreateClientPage';
 import UploadDataPage from './pages/UploadDataPage';
+import ProtectedRoute from './components/ProtectedRoute'; // Importar el componente ProtectedRoute
+import AdminPanel from './components/AdminPanel'; // Importar el componente AdminPanel
 
 const App = () => {
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Eliminar el token de localStorage
+    navigate('/login'); // Redirigir a la página de inicio de sesión
+  };
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/user-dashboard" element={<UserDashboard />} />
-        <Route path="/users" element={<Users />} /> {/* Añadir ruta para Users */}
-        <Route path="/clients" element={<ClientsPage />} />
-        <Route path="/create-client" element={<CreateClientPage />} />
-        <Route path="/upload-data" element={<UploadDataPage />} />
+        <Route
+          path="/register"
+          element={
+            <ProtectedRoute>
+              <Register />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user-dashboard"
+          element={
+            <ProtectedRoute>
+              <UserDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <Users />
+            </ProtectedRoute>
+          }
+        /> {/* Añadir ruta para Users */}
+        <Route
+          path="/clients"
+          element={
+            <ProtectedRoute>
+              <ClientsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/create-client"
+          element={
+            <ProtectedRoute>
+              <CreateClientPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/upload-data"
+          element={
+            <ProtectedRoute>
+              <UploadDataPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
+      <AdminPanel handleLogout={handleLogout} /> {/* Pasar la función handleLogout */}
     </Router>
   );
 };
