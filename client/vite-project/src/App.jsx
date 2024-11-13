@@ -9,6 +9,7 @@ import ClientsPage from './pages/ClientsPage';
 import CreateClientPage from './pages/CreateClientPage';
 import UploadDataPage from './pages/UploadDataPage';
 import ProtectedRoute from './components/ProtectedRoute'; // Importar el componente ProtectedRoute
+import AdminRoute from './components/AdminRoute'; // Importar el componente AdminRoute
 
 const App = () => {
   return (
@@ -19,9 +20,9 @@ const App = () => {
         <Route
           path="/register"
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <Register />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
         <Route
