@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import AdminPanel from '../components/AdminPanel';
-import adminImage from '../source/logo.png'; // Importa la imagen desde la carpeta src
+import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
   const [isPanelOpen, setIsPanelOpen] = useState(true);
@@ -19,12 +18,9 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen flex bg-gradient-to-r from-blue-500 to-purple-600">
       <AdminPanel isPanelOpen={isPanelOpen} togglePanel={togglePanel} handleLogout={handleLogout} />
-      <main className="flex-1 p-8 flex justify-center items-center">
+      <main className="flex-1 p-8">
+        <h1 className="text-4xl font-bold text-white">Bienvenido al Panel de Administración</h1>
         {/* Aquí puedes agregar el contenido principal del panel de administración */}
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-8">Bienvenido al Panel de Administración</h1>
-          <img src={adminImage} alt="Admin Dashboard" className="max-w-full h-auto object-cover" />
-        </div>
       </main>
     </div>
   );

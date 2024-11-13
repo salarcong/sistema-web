@@ -9,14 +9,8 @@ import ClientsPage from './pages/ClientsPage';
 import CreateClientPage from './pages/CreateClientPage';
 import UploadDataPage from './pages/UploadDataPage';
 import ProtectedRoute from './components/ProtectedRoute'; // Importar el componente ProtectedRoute
-import AdminPanel from './components/AdminPanel'; // Importar el componente AdminPanel
 
 const App = () => {
-  const handleLogout = () => {
-    localStorage.removeItem('token'); // Eliminar el token de localStorage
-    navigate('/login'); // Redirigir a la página de inicio de sesión
-  };
-
   return (
     <Router>
       <Routes>
@@ -79,7 +73,6 @@ const App = () => {
           }
         />
       </Routes>
-      <AdminPanel handleLogout={handleLogout} /> {/* Pasar la función handleLogout */}
     </Router>
   );
 };
