@@ -1,9 +1,10 @@
+// client/vite-project/src/components/UploadDataPanel.jsx
 import React, { useEffect, useState } from 'react';
 import { getDataRequest, deleteDataRequest } from '../api/axios';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import EditDataModal from './EditDataModal';
 
-const UploadDataPanel = ({ handleFileChange, handleUpload }) => {
+const UploadDataPanel = ({ handleFileChange, handleUpload, clientId }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +14,7 @@ const UploadDataPanel = ({ handleFileChange, handleUpload }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getDataRequest();
+        const response = await getDataRequest(clientId);
         setData(response.data);
         setLoading(false);
       } catch (error) {
@@ -23,20 +24,20 @@ const UploadDataPanel = ({ handleFileChange, handleUpload }) => {
     };
 
     fetchData();
-  }, []);
+  }, [clientId]);
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this client?')) {
+    if (window.confirm('Are you sure you want to delete this document?')) {
       try {
         const response = await deleteDataRequest(id);
         if (response.status === 200) {
           setData(data.filter(item => item._id !== id));
         } else {
-          alert('Failed to delete client');
+          alert('Failed to delete document');
         }
       } catch (error) {
-        console.error('Error deleting client:', error);
-        alert('An error occurred while deleting the client');
+        console.error('Error deleting document:', error);
+        alert('An error occurred while deleting the document');
       }
     }
   };

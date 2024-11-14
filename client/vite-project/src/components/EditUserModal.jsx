@@ -1,9 +1,8 @@
-// client/vite-project/src/components/EditUserModal.jsx
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { updateUserRequest } from '../api/axios';
 
-Modal.setAppElement('#root'); // Asegúrate de que esto apunte al elemento raíz de tu aplicación
+Modal.setAppElement('#root');
 
 const EditUserModal = ({ isOpen, onRequestClose, user, onSave }) => {
   const [editedUser, setEditedUser] = useState({ ...user });
@@ -49,13 +48,27 @@ const EditUserModal = ({ isOpen, onRequestClose, user, onSave }) => {
         onChange={handleChange}
         className="mb-2 p-2 border rounded w-full"
       />
-      <input
-        type="text"
-        name="role"
-        value={editedUser.role}
-        onChange={handleChange}
-        className="mb-2 p-2 border rounded w-full"
-      />
+      <div className="mb-4">
+        <label htmlFor="role" className="block text-gray-700">Rol</label>
+        <div className="flex items-center border border-gray-300 rounded-md shadow-sm">
+          <div className="relative w-full">
+            <select
+              id="role"
+              name="role"
+              className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 pr-8 rounded-md leading-tight focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              value={editedUser.role}
+              onChange={handleChange}
+              required
+            >
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M7 10l5 5 5-5H7z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="flex space-x-2 mt-4">
         <button
           onClick={handleSave}

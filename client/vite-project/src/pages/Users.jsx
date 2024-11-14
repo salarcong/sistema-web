@@ -1,4 +1,3 @@
-// client/vite-project/src/pages/Users.jsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserPanel from '../components/UserPanel';
@@ -43,12 +42,18 @@ const Users = () => {
       <main className="flex-1 p-8">
         <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Usuarios</h1>
-          <div className="mb-6 text-center">
+          <div className="mb-6 text-center flex justify-center space-x-4">
             <button
               onClick={() => navigate('/admin-dashboard')}
               className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300 shadow-lg transform hover:scale-105"
             >
-              Back to Admin Dashboard
+              Regresar al Admin Dashboard
+            </button>
+            <button
+              onClick={() => navigate('/register')}
+              className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-300 shadow-lg transform hover:scale-105"
+            >
+              Registrar Nuevo Usuario
             </button>
           </div>
           {error ? (

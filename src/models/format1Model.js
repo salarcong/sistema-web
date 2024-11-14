@@ -1,6 +1,6 @@
+// src/models/format1Model.js
 const mongoose = require('mongoose');
 
-// Definir el esquema de format1
 const format1Schema = new mongoose.Schema({
   firstName: { 
     type: String, 
@@ -34,6 +34,11 @@ const format1Schema = new mongoose.Schema({
   format: { 
     type: String, 
     default: 'format1' 
+  },
+  clientId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Client',
+    required: true
   }
 });
 

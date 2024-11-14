@@ -8,6 +8,8 @@ import Users from './pages/Users'; // Añadir importación de Users
 import ClientsPage from './pages/ClientsPage';
 import CreateClientPage from './pages/CreateClientPage';
 import UploadDataPage from './pages/UploadDataPage';
+import ProtectedRoute from './components/ProtectedRoute'; // Importar el componente ProtectedRoute
+import AdminRoute from './components/AdminRoute'; // Importar el componente AdminRoute
 
 const App = () => {
   return (
@@ -15,13 +17,62 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/user-dashboard" element={<UserDashboard />} />
-        <Route path="/users" element={<Users />} /> {/* Añadir ruta para Users */}
-        <Route path="/clients" element={<ClientsPage />} />
-        <Route path="/create-client" element={<CreateClientPage />} />
-        <Route path="/upload-data" element={<UploadDataPage />} />
+        <Route
+          path="/register"
+          element={
+            <AdminRoute>
+              <Register />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user-dashboard"
+          element={
+            <ProtectedRoute>
+              <UserDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <Users />
+            </ProtectedRoute>
+          }
+        /> {/* Añadir ruta para Users */}
+        <Route
+          path="/clients"
+          element={
+            <ProtectedRoute>
+              <ClientsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/create-client"
+          element={
+            <ProtectedRoute>
+              <CreateClientPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/upload-data"
+          element={
+            <ProtectedRoute>
+              <UploadDataPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );

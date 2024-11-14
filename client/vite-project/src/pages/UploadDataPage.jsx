@@ -6,36 +6,40 @@ import ClientInfoPanel from '../components/ClientInfoPanel';
 import UploadDataPanel from '../components/UploadDataPanel';
 
 const UploadDataPage = () => {
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
   const clientId = new URLSearchParams(location.search).get('clientId');
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    setFiles(e.target.files);
   };
 
   const handleUpload = async () => {
-    if (!file) {
-      alert('Please select a file first');
+    if (files.length === 0) {
+      alert('Please select files first');
       return;
     }
 
     const formData = new FormData();
-    formData.append('file', file);
+    for (const file of files) {
+      formData.append('files', file);
+    }
+    console.log('clientId:', clientId);
+    formData.append('clientId', clientId); // Añade el clientId al formData
 
     try {
       const response = await uploadFileRequest(formData);
       if (response.status === 200) {
-        alert('File uploaded successfully');
-        setFile(null);
+        alert('Files uploaded successfully');
+        setFiles([]);
       } else {
-        alert('Failed to upload file');
+        alert('Failed to upload files');
       }
     } catch (error) {
-      console.error('Error uploading file:', error);
-      alert('An error occurred while uploading the file');
+      console.error('Error uploading files:', error);
+      alert('An error occurred while uploading the files');
     }
   };
 
@@ -45,7 +49,7 @@ const UploadDataPage = () => {
       <UploadDataPanel
         handleFileChange={handleFileChange}
         handleUpload={handleUpload}
-        navigate={navigate}
+        clientId={clientId} // Pasa el clientId al componente UploadDataPanel
       />
     </div>
   );

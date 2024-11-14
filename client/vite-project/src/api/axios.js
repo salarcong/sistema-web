@@ -16,7 +16,10 @@ export const updateUserRequest = (id, user) => api.put(`/updateUser/${id}`, user
 
 // Funciones para clientes
 export const getClientsRequest = () => api.get('/clients');
-export const getClientRequest = (id) => api.get(`/client/${id}`);
+export const getClientRequest = (id) => {
+  if (!id) throw new Error('clientId is required');
+  return api.get(`/client/${id}`);
+};
 export const deleteClientRequest = (id) => api.delete(`/delete-client/${id}`);
 export const updateClientRequest = (id, client) => api.put(`/update-client/${id}`, client);
 export const createClientRequest = (client) => api.post('/add-client', client);
@@ -27,7 +30,10 @@ export const uploadFileRequest = (formData) => api.post('/upload', formData, {
     'Content-Type': 'multipart/form-data',
   },
 });
-export const getDataRequest = () => api.get('/dataXLSX');
+export const getDataRequest = (clientId) => {
+  if (!clientId) throw new Error('clientId is required');
+  return api.get(`/dataXLSX/${clientId}`);
+};
 export const getDataByIdRequest = (id) => api.get(`/dataXLSX/${id}`);
 export const deleteDataRequest = (id) => api.delete(`/deleteXLSX/${id}`);
 export const updateDataRequest = (id, data) => api.put(`/updateXLSX/${id}`, data);
