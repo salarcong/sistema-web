@@ -24,7 +24,6 @@ const UserPanel = ({ user, onDelete }) => {
 
   const handleSaveUser = (updatedUser) => {
     setIsEditing(false);
-    // Aquí puedes actualizar el estado del usuario si es necesario
     window.location.reload(); // Recargar la página automáticamente
   };
 
