@@ -33,12 +33,12 @@ const UserPanel = ({ user, onDelete }) => {
       <p className="text-gray-700">{user.email}</p>
       <p className="text-gray-700">Role: {user.role}</p>
       <div className="flex space-x-2 mt-4">
-        <button
+        {/*<button
           onClick={() => setIsEditing(true)}
           className="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600 transition duration-300 shadow-lg transform hover:scale-105"
         >
           Edit User
-        </button>
+        </button>*/}
         <button
           onClick={handleDeleteUser}
           className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition duration-300 shadow-lg transform hover:scale-105"

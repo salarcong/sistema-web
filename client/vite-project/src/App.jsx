@@ -10,6 +10,8 @@ import CreateClientPage from './pages/CreateClientPage';
 import UploadDataPage from './pages/UploadDataPage';
 import ProtectedRoute from './components/ProtectedRoute'; // Importar el componente ProtectedRoute
 import AdminRoute from './components/AdminRoute'; // Importar el componente AdminRoute
+import ClientsPageUser from './pages/clientsPageUser';
+import CreateClientPageUser from './pages/CreateClientPageUser';
 
 const App = () => {
   return (
@@ -70,6 +72,22 @@ const App = () => {
           element={
             <ProtectedRoute>
               <UploadDataPage />
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/clientsUser"
+          element={
+            <ProtectedRoute>
+              <ClientsPageUser />
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/create-client-user"
+          element={
+            <ProtectedRoute>
+              <CreateClientPageUser />
             </ProtectedRoute>
           }
         />
